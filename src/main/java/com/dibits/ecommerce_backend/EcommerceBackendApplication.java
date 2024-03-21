@@ -31,7 +31,7 @@ import com.dibits.ecommerce_backend.repositories.PagamentoRepository;
 import com.dibits.ecommerce_backend.repositories.PedidoRepository;
 import com.dibits.ecommerce_backend.repositories.ProdutoRepository;
 
-//ep23finalizado
+//ep33finalizado
 @SpringBootApplication
 public class EcommerceBackendApplication implements CommandLineRunner {
 
@@ -135,7 +135,7 @@ public class EcommerceBackendApplication implements CommandLineRunner {
 
 		Cliente cli1 = new Cliente(null, "Diogo Martins", "dibits.labs@gmail.com", "80118723030",
 				TipoCliente.PESSOAFISICA);
-		cli1.getTelefones().addAll(Arrays.asList("64992768765", "34998336599"));
+		cli1.getTelefones().addAll(Arrays.asList("991111111", "992222222"));
 
 		Endereco end1 = new Endereco(null, "Alameda dos Brasileiros", "2", "Qd 2 lt 1", "Brasilzinho", "77777000", cli1,
 				c4);
