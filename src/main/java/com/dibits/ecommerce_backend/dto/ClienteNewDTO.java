@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.dibits.ecommerce_backend.services.validation.ClienteInsert;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 //anotação personalizada criada na camada de servicos
-//@ClienteInsert
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
