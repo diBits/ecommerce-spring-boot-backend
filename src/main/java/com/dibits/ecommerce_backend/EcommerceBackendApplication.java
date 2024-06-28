@@ -31,7 +31,7 @@ import com.dibits.ecommerce_backend.repositories.PagamentoRepository;
 import com.dibits.ecommerce_backend.repositories.PedidoRepository;
 import com.dibits.ecommerce_backend.repositories.ProdutoRepository;
 
-//ep33finalizado
+//ep47finalizado
 @SpringBootApplication
 public class EcommerceBackendApplication implements CommandLineRunner {
 
