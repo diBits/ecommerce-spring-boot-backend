@@ -24,6 +24,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 			Pageable pageRequest);
 
 	// findDistinctByNomeContainingAndCategoriasIn (colocando nome do metodo
-	// conforme descrito, faz com que o Spring execute a query descrita)
+	// conforme descrito, faz com que o Spring execute a query descrita sem necessidade de executar manualmente)
 
 }
