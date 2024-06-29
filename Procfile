@@ -1,1 +1,2 @@
 web: java -Dserver.port=$PORT -Dspring.profiles.active=prod $JAVA_OPTS -jar target/ecommerce_backend-0.0.1-SNAPSHOT.jar
+web: mvn -X clean install && java -Dserver.port=$PORT -jar target/ecommerce_backend-0.0.1-SNAPSHOT.jar
