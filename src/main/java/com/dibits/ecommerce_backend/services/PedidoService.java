@@ -1,6 +1,7 @@
 package com.dibits.ecommerce_backend.services;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dibits.ecommerce_backend.domain.ItemPedido;
 import com.dibits.ecommerce_backend.domain.PagamentoComBoleto;
 import com.dibits.ecommerce_backend.domain.Pedido;
+import com.dibits.ecommerce_backend.domain.Produto;
 import com.dibits.ecommerce_backend.domain.enums.EstadoPagamento;
+import com.dibits.ecommerce_backend.repositories.ClienteRepository;
 import com.dibits.ecommerce_backend.repositories.ItemPedidoRepository;
 import com.dibits.ecommerce_backend.repositories.PagamentoRepository;
 import com.dibits.ecommerce_backend.repositories.PedidoRepository;
@@ -35,6 +38,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ItemPedidoRepository itemPedRepo;
+	
+	@Autowired
+	private ClienteRepository clirepo;
 
 	public Pedido find(Integer id) {
 
@@ -51,6 +57,7 @@ public class PedidoService {
 		// TODO Auto-generated method stub
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clirepo.findById(obj.getCliente().getId()).orElseThrow(() -> new RuntimeException("Cliente não encontrado")));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 
@@ -62,11 +69,25 @@ public class PedidoService {
 		obj = repo.save(obj);
 		pgtoRepo.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
-			ip.setDesconto(0.0);
-			prodRepo.findById(ip.getProduto().getId()).ifPresent(produto -> ip.setPreco(produto.getPreco()));
-			ip.setPedido(obj);
+		    ip.setDesconto(0.0);
+		    
+		    // Use findById e obtenha o produto se ele existir
+		    Optional<Produto> produtoOpt = prodRepo.findById(ip.getProduto().getId());
+		    if (produtoOpt.isPresent()) {
+		        Produto produto = produtoOpt.get();
+		        ip.setProduto(produto);
+		        ip.setPreco(produto.getPreco());
+		    } else {
+		        // Lida com o caso em que o produto não é encontrado
+		        throw new RuntimeException("Produto não encontrado: " + ip.getProduto().getId());
+		    }
+
+		    ip.setPedido(obj);
 		}
+
 		itemPedRepo.saveAll(obj.getItens());
+		
+		System.out.println(obj);
 
 		return obj;
 	}
